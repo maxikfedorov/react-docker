@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    container_name: React_Frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/app
+
+    stdin_open: true
+    tty: true
+
+  apache:
+      build: ./backend/apache
+      container_name: Apache_Backend
+      ports:
+        - '8005:80'
+      volumes:
+        - ./backend/src:/var/www/apache-server/html
+        - ./backend/apache/httpd.conf:/etc/apache2/sites-enabled/000-default.conf
+        - ./backend/apache/php.ini:/usr/local/etc/php/php.ini
